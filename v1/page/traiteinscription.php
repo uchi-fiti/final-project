@@ -1,6 +1,5 @@
 <?php 
-
-
+session_start();
 require("../inc/connexion.php");
 require("../inc/function.php");
 $name=$_POST['nom'];
@@ -17,7 +16,7 @@ else{
 ?>
 <p>Compte enregistre !</p>
 <?php 
-    header("Location: home.php");
+    header("Location: index.php");
 ?>
 <!-- <a href = "../page/index.php">Retour a la page d acceuil</a> -->
 <?php } ?>

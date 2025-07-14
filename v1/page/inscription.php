@@ -25,6 +25,8 @@
     <input type="text" name="ville" id="">
     <p>Mot de passe anao</p>
     <input type = "text" name = "mdpp">
+    <p>Choisissez un pfp</p>
+    <input type="file" name="fichier" id="fichier">
     <input type = "submit" value = "Valider">
     </form>
 </body>
