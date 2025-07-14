@@ -60,7 +60,7 @@ function tabLogin($bd, $email, $m){
             $dateRetour = dateretour($bd, $obj['id_objet'], $idm);
         ?>
             <article class="col">
-                <a href="">
+                <a href="fiche.php?ido=<?php echo $obj['id_objet'];?>">
                 <section class="card card-hover h-100 p-3">
                     <header>
                     <?php $nameImg = getImageObjet($bd, $obj['id_objet']);
@@ -122,7 +122,7 @@ function tabLogin($bd, $email, $m){
             $dateRetour = dateretour($bd, $obj['id_objet'], $idm);
         ?>
             <article class="col">
-                <a href="">
+                <a href="fiche.php?ido=<?php echo $obj['id_objet'];?>">
                 <section class="card card-hover h-100 p-3">
                     <header>
                         <?php $nameImg = getImageObjet($bd, $obj['id_objet']);
@@ -173,10 +173,51 @@ function tabLogin($bd, $email, $m){
  }
  function ficheObjet($bd, $ido)
  {
-    $req = 'select * from fp_objet 
-    
-    where id_objet = %d;';
+    $req = 'select * from fp_objet as o
+    join fp_membre as m on o.id_membre=m.id_membre
+    join fp_categorie_objet as c on o.id_categorie=c.id_categorie
+    where o.id_objet = %d;';
     $reqImg = 'select * from fp_images_objet where id_objet = %d;';
-
+    $req = sprintf($req, $ido);
+    $reqImg = sprintf($reqImg, $ido);
+    $a = mysqli_query($bd, $req);
+    $b = mysqli_query($bd, $reqImg);
+    $imgprinc = true;
+    // echo $req;
+    // echo $imgprinc;
+    while($img = mysqli_fetch_assoc($b))
+    {
+        if($imgprinc)
+        {
+            $path = "../assets/img/";
+            if($obj = mysqli_fetch_assoc($a))
+            {
+                ?>
+                <img src="<?php echo $path . $obj[nom_image];?>" alt="">
+                <p>Proprietaire: <?php echo $obj['nom'];?></p>
+                <p>Nom objet: <?php echo $obj['nom_objet'];?></p>
+                <p>Categorie: <?php echo $obj['nom_categorie'];?></p>
+                <?php
+                $imgprinc = false;
+            }
+        }
+        ?>
+        <img src="<?php echo $path . $obj[nom_image];?>" alt="">
+        <?php   
+    }
+    if($imgprinc)
+    {
+        $path = "../assets/img/";
+        if($obj = mysqli_fetch_assoc($a))
+        {
+            ?>
+            <img src="<?php echo $path . $obj[nom_image];?>" alt="">
+            <p>Proprietaire: <?php echo $obj['nom'];?></p>
+            <p>Nom objet: <?php echo $obj['nom_objet'];?></p>
+            <p>Categorie: <?php echo $obj['nom_categorie'];?></p>
+            <?php
+            $imgprinc = 0;
+        }
+    }
  }
 ?>

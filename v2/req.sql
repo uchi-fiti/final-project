@@ -107,4 +107,16 @@ insert into fp_emprunt (id_objet, id_membre, date_emprunt, date_retour) values
 (9, 2, '2023-10-09', '2023-10-19'),
 (10, 3, '2023-10-10', '2023-10-20');
 
-select * from fp_objet as o where id_membre = %d;    
+select * from fp_objet as o where id_membre = %d;   
+
+-- create or replace view v_info_objet as select  
+-- o.id_objet, 
+-- o.nom_objet, 
+-- o.description_objet, 
+-- o.date_creation, 
+-- m.nom_membre, 
+-- m.email_membre, 
+-- c.nom_categorie
+-- from fp_objet as o
+-- join fp_membre as m on o.id_membre=m.id_membre
+-- join fp_categorie_objet as c on o.id_categorie=c.id_categorie;
