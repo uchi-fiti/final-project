@@ -173,7 +173,9 @@ function tabLogin($bd, $email, $m){
  }
  function ficheObjet($bd, $ido)
  {
-    $req = 'select * from fp_objet where id_objet = %d;';
+    $req = 'select * from fp_objet 
+    
+    where id_objet = %d;';
     $reqImg = 'select * from fp_images_objet where id_objet = %d;';
 
  }
