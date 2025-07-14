@@ -171,4 +171,10 @@ function tabLogin($bd, $email, $m){
         return "WorkingMan.jpg";
     }
  }
+ function ficheObjet($bd, $ido)
+ {
+    $req = 'select * from fp_objet where id_objet = %d;';
+    $reqImg = 'select * from fp_images_objet where id_objet = %d;';
+
+ }
 ?>
