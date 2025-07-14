@@ -106,3 +106,5 @@ insert into fp_emprunt (id_objet, id_membre, date_emprunt, date_retour) values
 (8, 1, '2023-10-08', '2023-10-18'),
 (9, 2, '2023-10-09', '2023-10-19'),
 (10, 3, '2023-10-10', '2023-10-20');
+
+select * from fp_objet as o where id_membre = %d;    

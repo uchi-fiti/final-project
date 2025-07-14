@@ -10,7 +10,7 @@ function tabLogin($bd, $email, $m){
 
  function siExiste($bd, $email)
  {
-    $request = 'SELECT * from Membres where Email = "%s";';
+    $request = 'SELECT * from fp_membre where email = "%s";';
     $request = sprintf($request, $email);
     $a = mysqli_query($bd, $request);
     if($b = mysqli_fetch_assoc($a))
@@ -21,10 +21,10 @@ function tabLogin($bd, $email, $m){
         return false;
     }
  }
- function Inscription($bd, $name, $andro, $email, $m)
+ function Inscription($bd, $name, $andro, $gender, $email, $ville, $m)
  {
-    $requete = 'INSERT INTO fp_membre (nom, date_naissance, email, mdp)VALUES ("%s" , "%s", "%s", "%s");';
-    $requete = sprintf($requete, $name, $andro, $email, $m);
+    $requete = 'INSERT INTO fp_membre (nom, date_naissance, genre, email, ville, mdp)VALUES ("%s" , "%s", "%s", "%s", "%s","%s");';
+    $requete = sprintf($requete, $name, $andro, $gender, $email, $ville, $m);
     if(siExiste($bd, $email))
     {
         return 0;
@@ -36,5 +36,33 @@ function tabLogin($bd, $email, $m){
     else{
         return 0;
     }
+ }
+ function 
+ function listeObjets($bd, $idm)
+ {
+    $req = 'select * from fp_objet as o where id_membre = %d;';
+    $req = sprintf($req, $idm);
+    $a = mysqli_query($bd, $req);
+    ?>
+    <table class="table table-hover">
+        <tr>
+            <th>Nom objet</th>
+            <th>Emprunte</th>
+            <th>Date Retour</th>
+        </tr>
+        <?php
+    while($obj = mysqli_fetch_assoc($a))
+    {
+        ?>
+        <tr>
+            <td><?php echo $obj['nom_objet'];?></td>
+            <td><?php ?></td>
+            <td></td>
+        </tr>
+        <?php
+    }
+    ?>
+    </table>
+    <?php
  }
 ?>
