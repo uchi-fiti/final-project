@@ -63,7 +63,9 @@ function tabLogin($bd, $email, $m){
                 <a href="">
                 <section class="card card-hover h-100 p-3">
                     <header>
-                        <img src="" alt="">
+                    <?php $nameImg = getImageObjet($bd, $obj['id_objet']);
+                        $path = "../assets/img/".$nameImg; ?>
+                        <img src=<?php echo $path ;?> alt="Img">
                         <h5 class="card-title mb-2">
                                 <?php echo $obj['nom_objet']; ?>
                         </h5>
@@ -103,6 +105,7 @@ function tabLogin($bd, $email, $m){
     </div>
             <?php
  }
+
  function listeObjetsparCategorie($bd, $idm, $idc)
  {
     $req = 'select * from fp_objet where id_membre = %d and id_categorie = %d;';
@@ -118,7 +121,9 @@ function tabLogin($bd, $email, $m){
                 <a href="">
                 <section class="card card-hover h-100 p-3">
                     <header>
-                        <img src="" alt="">
+                        <?php $nameImg = getImageObjet($bd, $obj['id_objet']);
+                        $path = "../assets/img/".$nameImg; ?>
+                        <img src=<?php echo $path ;?> alt="">
                         <h5 class="card-title mb-2">
                                 <?php echo $obj['nom_objet']; ?>
                         </h5>
@@ -137,5 +142,25 @@ function tabLogin($bd, $email, $m){
             <?php } ?>
         </section>
     <?php
+ }
+ function idObjet($bd, $nom, $id, $idcat)
+ {
+    $request = "select id_objet from fp_objet where nom_objet = '%s' and id_categorie = %d and id_membre = %d;";
+    $request = sprintf($request, $nom, $idcat, $id);
+    $query = mysqli_query($bd, $request);
+    if($data = mysqli_fetch_assoc($query))
+    {
+        return $data['id_objet'];
+    }
+ }
+ function getImageObjet($bd, $id)
+ {
+    $request = "select * from fp_images_objet where id_objet = %d";
+    $request = sprintf($request, $id);
+    $query = mysqli_query($bd, $request);
+    if($data = mysqli_fetch_assoc($query))
+    {
+        return $data['nom_image'];
+    }
  }
 ?>
