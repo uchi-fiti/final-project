@@ -39,15 +39,12 @@ function tabLogin($bd, $email, $m){
  }
  function dateretour($bd, $id_objet, $idm)
 {
-    $request = "select * from fp_emprunt where id_objet = %d AND id_membre = %d";
+    $request = "select * from fp_emprunt where id_objet = %d AND id_membre = %d and date_retour > now()";
     $request = sprintf($request , $id_objet, $idm);
     $query = mysqli_query($bd, $request);
     if($data = mysqli_fetch_assoc($query))
     {
-        if($data['date_retour'] > NOW())
-    {
         return $data['date_retour'];
-    }
     }
     return null;
 }
@@ -56,43 +53,55 @@ function tabLogin($bd, $email, $m){
     $req = 'select * from fp_objet where id_membre = %d;';
     $req = sprintf($req, $idm);
     $a = mysqli_query($bd, $req);
-    ?>
-    <table class="table table-hover">
-        <tr>
-            <th>Nom objet</th>
-            <th>Emprunte</th>
-            <th>Date Retour</th>
-        </tr>
-        <?php
-    while($obj = mysqli_fetch_assoc($a))
-    {
+?>
+
+        <section class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        <?php while($obj = mysqli_fetch_assoc($a)) {
+            $dateRetour = dateretour($bd, $obj['id_objet'], $idm);
         ?>
-        <tr>
-            <td><?php echo $obj['nom_objet'];?></td>
-            <td><?php echo dateretour($bd, $obj['id_objet'], $idm) == null ? "" : "emprunte";?></td>
-            <td><?php echo dateretour($bd, $obj['id_objet'], $idm) == null ? "" : dateretour($bd, $obj['id_objet'], $idm);?></td>
-        </tr>
-        <?php
-    }
-    ?>
-    </table>
+            <article class="col">
+                <a href="">
+                <section class="card card-hover h-100 p-3">
+                    <header>
+                        <img src="" alt="">
+                        <h5 class="card-title mb-2">
+                                <?php echo $obj['nom_objet']; ?>
+                        </h5>
+                    </header>
+                    <p class="mb-1">
+                        <strong>Emprunté:</strong>
+                        <?= $dateRetour ? 'Oui' : 'Non' ?>
+                    </p>
+                    <p class="mb-0">
+                        <strong>Date de retour:</strong>
+                        <?= $dateRetour ?: '—' ?>
+                    </p>
+                </section>
+                </a>
+            </article>
+            <?php } ?>
+        </section>
     <?php
  }
  function choixCategorie($bd)
  {
     ?>
-    <select name="categorie">
-    <?php
-    $request = "select * from fp_categorie_objet;";
-    $query = mysqli_query($bd, $request);
-    while($data = mysqli_fetch_assoc($query))
-    {
-        ?>
-        <option value="<?php echo $data['id_categorie'];?>"><?php echo $data['nom_categorie'];?></option>
-        <?php
-    } ?>
-    </select>
-    <?php 
+    <div class="mb-3">
+        <select name="categorie" id="categorie" class="form-select-lg">
+            <?php
+            $request = "select * from fp_categorie_objet;";
+            $query = mysqli_query($bd, $request);
+            while ($data = mysqli_fetch_assoc($query)) {
+                ?>
+                <option value="<?php echo $data['id_categorie']; ?>">
+                    <?php echo $data['nom_categorie']; ?>
+                </option>
+                <?php
+            }
+            ?>
+        </select>
+    </div>
+            <?php
  }
  function listeObjetsparCategorie($bd, $idm, $idc)
  {
@@ -100,25 +109,33 @@ function tabLogin($bd, $email, $m){
     $req = sprintf($req, $idm, $idc);
     $a = mysqli_query($bd, $req);
     ?>
-    <table class="table table-hover">
-        <tr>
-            <th>Nom objet</th>
-            <th>Emprunte</th>
-            <th>Date Retour</th>
-        </tr>
-        <?php
-    while($obj = mysqli_fetch_assoc($a))
-    {
+
+        <section class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        <?php while($obj = mysqli_fetch_assoc($a)) {
+            $dateRetour = dateretour($bd, $obj['id_objet'], $idm);
         ?>
-        <tr>
-            <td><?php echo $obj['nom_objet'];?></td>
-            <td><?php echo dateretour($bd, $obj['id_objet'], $idm) == null ? "" : "emprunte";?></td>
-            <td><?php echo dateretour($bd, $obj['id_objet'], $idm) == null ? "" : dateretour($bd, $obj['id_objet'], $idm);?></td>
-        </tr>
-        <?php
-    }
-    ?>
-    </table>
+            <article class="col">
+                <a href="">
+                <section class="card card-hover h-100 p-3">
+                    <header>
+                        <img src="" alt="">
+                        <h5 class="card-title mb-2">
+                                <?php echo $obj['nom_objet']; ?>
+                        </h5>
+                    </header>
+                    <p class="mb-1">
+                        <strong>Emprunté:</strong>
+                        <?= $dateRetour ? 'Oui' : 'Non' ?>
+                    </p>
+                    <p class="mb-0">
+                        <strong>Date de retour:</strong>
+                        <?= $dateRetour ?: '—' ?>
+                    </p>
+                </section>
+                </a>
+            </article>
+            <?php } ?>
+        </section>
     <?php
  }
 ?>

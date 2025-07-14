@@ -20,7 +20,20 @@
         opacity: 1;
     }
 }
-body {
+article a {
+    text-decoration: none;
+}
+.card-hover {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    background-color: #f8f9fa; /* default Bootstrap light background */
+}
+
+.card-hover:hover {
+    background-color: #e2e6ea; /* slightly darker */
+    transform: translateY(-4px);
+}
+
+ body {
     font-family: Arial, sans-serif;
     background-color: #f3f3f3;
     margin: 0;

@@ -16,16 +16,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="../assets/home.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
     <form action="traitefiltre.php" method="post">
-        <p>Filtrer par categorie: </p>
+        <h3>Filtrer par categorie: </h3>
         <?php choixCategorie($bd);?>
-        <input type="submit" value="Valider">
+        <button type="submit" class="btn btn-primary">Valider</button>
    </form>
-   <h1>Bienvenue a l'accueil</h1>
+   <h1 style="text-align: center;">Liste des objets</h1>
    <?php
    if(!isset($_GET['idc']))
    {
