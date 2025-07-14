@@ -65,7 +65,7 @@ function tabLogin($bd, $email, $m){
                     <header>
                     <?php $nameImg = getImageObjet($bd, $obj['id_objet']);
                         $path = "../assets/img/".$nameImg; ?>
-                        <img src=<?php echo $path ;?> alt="Img">
+                        <img src=<?php echo $path ;?> alt="">
                         <h5 class="card-title mb-2">
                                 <?php echo $obj['nom_objet']; ?>
                         </h5>
@@ -78,6 +78,10 @@ function tabLogin($bd, $email, $m){
                         <strong>Date de retour:</strong>
                         <?= $dateRetour ?: '—' ?>
                     </p>
+                    <form action="traiteSuppresion.php" method = "post">
+                        <input type="submit" value="Supprimer cette image">
+                        <input type="hidden" name="idObj" value = <?php echo $obj['id_objet']; ?>>
+                    </form>
                 </section>
                 </a>
             </article>
@@ -161,6 +165,10 @@ function tabLogin($bd, $email, $m){
     if($data = mysqli_fetch_assoc($query))
     {
         return $data['nom_image'];
+    }
+    else
+    {
+        return "WorkingMan.jpg";
     }
  }
 ?>

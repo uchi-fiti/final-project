@@ -37,6 +37,7 @@
     listeObjetsparCategorie($bd, $id, $idc);
    } 
    ?>
+   </br></br>
    <a href="ajouterObjet.php"><button>Ajouter un objet a votre liste</button></a>
 </body>
 </html>
