@@ -210,13 +210,18 @@ function tabLogin($bd, $email, $m){
         $path = "../assets/img/";
         if($obj = mysqli_fetch_assoc($a))
         {
-            ?>
-            <img src="<?php echo $path . $obj[nom_image];?>" alt="">
+            if($img = mysqli_fetch_assoc($b))
+            {
+				?>
+				<img src="<?php echo $path . $img['nom_image'];?>" alt="">
+				<?php
+			}
+			?>
+            
             <p>Proprietaire: <?php echo $obj['nom'];?></p>
             <p>Nom objet: <?php echo $obj['nom_objet'];?></p>
             <p>Categorie: <?php echo $obj['nom_categorie'];?></p>
             <?php
-            $imgprinc = 0;
         }
     }
  }
