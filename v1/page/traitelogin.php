@@ -13,8 +13,8 @@ $a = tabLogin($bd, $email, $m);
 
 if($u = mysqli_fetch_assoc($a))  
 {
-    $_SESSION['idm']=$u['idMembre'];
-    $_SESSION['names']=$u['Nom'];
+    $_SESSION['idm']=$u['id_membre'];
+    $_SESSION['names']=$u['nom'];
     echo "ok";
     header("Location:./home.php");
 }
