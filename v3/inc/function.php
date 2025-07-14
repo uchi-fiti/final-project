@@ -44,6 +44,7 @@ function tabLogin($bd, $email, $m){
     $query = mysqli_query($bd, $request);
     if($data = mysqli_fetch_assoc($query))
     {
+        echo "bruh";
         return $data['date_retour'];
     }
     return null;
@@ -58,6 +59,8 @@ function tabLogin($bd, $email, $m){
         <section class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
         <?php while($obj = mysqli_fetch_assoc($a)) {
             $dateRetour = dateretour($bd, $obj['id_objet'], $idm);
+            echo $dateRetour;
+            // echo "123";
         ?>
             <article class="col">
                 <a href="fiche.php?ido=<?php echo $obj['id_objet'];?>">
@@ -74,10 +77,25 @@ function tabLogin($bd, $email, $m){
                         <strong>Emprunté:</strong>
                         <?= $dateRetour ? 'Oui' : 'Non' ?>
                     </p>
-                    <p class="mb-0">
-                        <strong>Date de retour:</strong>
-                        <?= $dateRetour ?: '—' ?>
+                    <?php 
+                    if($dateRetour)
+                    {
+                        ?>
+                        <p class="mb-0">
+                        <strong>Disponible le:</strong>
+                        <?= $dateRetour ?>
                     </p>
+                        <?php
+                    }
+                    else {
+                        ?>
+                        <form action="emprunt.php" method = "post">
+                        <input type="submit" value="Emprunter cet objet">
+                        <input type="hidden" name="idObj" value = <?php echo $obj['id_objet']; ?>>
+                    </form>
+                        <?php
+                    }
+                    ?>
                     <form action="traiteSuppresion.php" method = "post">
                         <input type="submit" value="Supprimer cette image">
                         <input type="hidden" name="idObj" value = <?php echo $obj['id_objet']; ?>>
@@ -136,16 +154,43 @@ function tabLogin($bd, $email, $m){
                         <strong>Emprunté:</strong>
                         <?= $dateRetour ? 'Oui' : 'Non' ?>
                     </p>
-                    <p class="mb-0">
-                        <strong>Date de retour:</strong>
-                        <?= $dateRetour ?: '—' ?>
+                    <?php 
+                    if($dateRetour)
+                    {
+                        ?>
+                        <p class="mb-0">
+                        <strong>Disponible le:</strong>
+                        <?= $dateRetour ?>
                     </p>
+                        <?php
+                    }
+                    else {
+                        ?>
+                        <form action="emprunt.php" method = "post">
+                        <input type="submit" value="Emprunter cet objet">
+                        <input type="hidden" name="idObj" value = <?php echo $obj['id_objet']; ?>>
+                    </form>
+                        <?php
+                    }
+                    ?>
+
+                    <form action="traiteSuppresion.php" method = "post">
+                        <input type="submit" value="Supprimer cette image">
+                        <input type="hidden" name="idObj" value = <?php echo $obj['id_objet']; ?>>
+                    </form>
+
                 </section>
                 </a>
             </article>
             <?php } ?>
         </section>
     <?php
+ }
+ function emprunter($bd, $idobjet, $duration)
+ {
+    $req = "update fp_emprunt set date_emprunt = NOW(), date_retour = DATE_ADD(NOW(), INTERVAL %d DAY) where id_objet = %d;";
+    $req = sprintf($req, $duration, $idobjet);
+    mysqli_query($bd, $req);
  }
  function idObjet($bd, $nom, $id, $idcat)
  {
